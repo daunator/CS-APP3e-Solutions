@@ -32,7 +32,7 @@ float_bits float_i2f(int x) {
     pos = msb_pos - 23;
     
     /* Calculate if correction(rounding) is needed */
-    int temp = 1 << (pos - 1);
+    temp = 1 << (pos - 1);
     if ((x & temp) && (x & (temp << 1) || x & (temp - 1)))
       correction = 1;
     
