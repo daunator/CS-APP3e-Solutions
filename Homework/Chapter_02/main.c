@@ -60,7 +60,7 @@ int main()
   printf("\n *** 2.62 ***\n");
   printf("int shifts are arithmetic: %d\n", is_little_endian());
 
-  /*** 2. 63 ***/
+  /*** 2.63 ***/
   int x = -123;
   unsigned y = ~0u - 1;
   assert(x >> 2 == sra(x, 2) && y >> 3 == srl(y, 3));
