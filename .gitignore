@@ -3,3 +3,6 @@
 
 # Output #
 prog
+
+# Swap files #
+*.swp
