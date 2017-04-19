@@ -9,10 +9,7 @@ default: $(TARGET)
 all: default
 
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
-HEADERS = $(wildcard *.h)
-
-%.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+2.92.o 2.93.o 2.94.o 2.95.o 2.96.o 2.97.o main.o: float_bits.h
 
 .PRECIOUS: $(TARGET) $(OBJECTS)
 
