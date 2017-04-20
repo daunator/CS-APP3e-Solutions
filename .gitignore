@@ -6,3 +6,7 @@ prog
 
 # Swap files #
 *.swp
+
+# Back-up files #
+*.bak
+
