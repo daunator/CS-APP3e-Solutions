@@ -8,6 +8,7 @@ typedef __int128 int128_t;
 long decode2(long x, long y, long z);
 void store_prod(int128_t *dest, int64_t x, int64_t y);
 long loop(long, long);
+long cred_alt(long *xp);
 
 int main()
 {
@@ -21,6 +22,9 @@ int main()
   /*** 3.60 ***/
   loop(1l, 2l);
 
+  /*** 3.61 ***/
+  long l;
+  cred_alt(&l);
   return 0;
 }
 
