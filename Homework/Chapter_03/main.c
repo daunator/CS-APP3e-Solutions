@@ -12,6 +12,7 @@ long loop(long, long);
 long cred_alt(long *xp);
 long switch3(long *p1, long *p2, mode_t action);
 long switch_prob(long x, long n);
+long store_ele(long i, long j, long k, long *dest);
 
 int main()
 {
@@ -29,12 +30,15 @@ int main()
   long l1;
   cred_alt(&l1);
 
-  /*** 3.63 ***/
+  /*** 3.62 ***/
   long l2;
   switch3(&l1, &l2, MODE_E);
 
-  /*** 3.64 ***/
+  /*** 3.63 ***/
   switch_prob(1l, 2l);
+
+  /*** 3.64 ***/
+  store_ele(1l, 2l, 3l, &l1);
 
   return 0;
 }
