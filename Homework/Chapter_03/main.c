@@ -11,6 +11,7 @@ void store_prod(int128_t *dest, int64_t x, int64_t y);
 long loop(long, long);
 long cred_alt(long *xp);
 long switch3(long *p1, long *p2, mode_t action);
+long switch_prob(long x, long n);
 
 int main()
 {
@@ -31,6 +32,9 @@ int main()
   /*** 3.63 ***/
   long l2;
   switch3(&l1, &l2, MODE_E);
+
+  /*** 3.64 ***/
+  switch_prob(1l, 2l);
 
   return 0;
 }
