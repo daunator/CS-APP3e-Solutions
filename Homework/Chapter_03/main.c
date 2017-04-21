@@ -13,6 +13,7 @@ long cred_alt(long *xp);
 long switch3(long *p1, long *p2, mode_t action);
 long switch_prob(long x, long n);
 long store_ele(long i, long j, long k, long *dest);
+void transpose(long A[15][15]);
 
 int main()
 {
@@ -39,6 +40,10 @@ int main()
 
   /*** 3.64 ***/
   store_ele(1l, 2l, 3l, &l1);
+
+  /*** 3.65 ***/
+  long A[15][15];
+  transpose(A);
 
   return 0;
 }
