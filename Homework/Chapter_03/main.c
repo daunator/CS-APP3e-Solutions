@@ -15,6 +15,7 @@ long switch_prob(long x, long n);
 long store_ele(long i, long j, long k, long *dest);
 void transpose(long A[15][15]);
 long sum_col(long n, long A[3*n][4*n + 1], long j);
+void good_echo(void);
 
 int main()
 {
@@ -49,6 +50,9 @@ int main()
   /*** 3.66 ***/
   long l3 = 3, A2[3*l3][4*l3 + 1];
   sum_col(l3, A2, l2*2);
+
+  /*** 3.71 ***/
+  good_echo();
 
   return 0;
 }
