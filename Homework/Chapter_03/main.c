@@ -20,7 +20,8 @@ long store_ele(long i, long j, long k, long *dest);
 void transpose(long A[15][15]);
 long sum_col(long n, long A[3*n][4*n + 1], long j);
 void good_echo(void);
-range_t find_range(float x);
+range_t find_range_1(float x);
+range_t find_range_2(float x);
 
 int main()
 {
@@ -62,7 +63,7 @@ int main()
   /*** 3.73 ***/
   for (unsigned int ii = 0; ii < UINT_MAX; ii++) {
     float_int_t value = { .u = ii };
-    range_t range = find_range(value.f);
+    range_t range = find_range_1(value.f);
     switch(fpclassify(value.f)) {
       case FP_NAN:
         assert(range == OTHER);
@@ -77,5 +78,22 @@ int main()
     }
   }
 
+  /*** 3.74 ***/
+  for (unsigned int ii = 0; ii < UINT_MAX; ii++) {
+    float_int_t value = { .u = ii };
+    range_t range = find_range_2(value.f);
+    switch(fpclassify(value.f)) {
+      case FP_NAN:
+        assert(range == OTHER);
+        break;
+      case FP_ZERO:
+        assert(range == ZERO);
+        break;
+      default:
+        assert((value.f < 0.0f && range == NEG) ||
+            (value.f > 0.0f && range == POS));
+        break;
+    }
+  }
   return 0;
 }
