@@ -60,40 +60,28 @@ int main()
   /*** 3.71 ***/
   //good_echo();
 
-  /*** 3.73 ***/
+  /*** 3.73-74 ***/
   for (unsigned int ii = 0; ii < UINT_MAX; ii++) {
     float_int_t value = { .u = ii };
-    range_t range = find_range_1(value.f);
+    range_t range_1 = find_range_1(value.f);
+    range_t range_2 = find_range_2(value.f);
     switch(fpclassify(value.f)) {
       case FP_NAN:
-        assert(range == OTHER);
+        assert(range_1 == OTHER);
+        assert(range_2 == OTHER);
         break;
       case FP_ZERO:
-        assert(range == ZERO);
+        assert(range_1 == ZERO);
+        assert(range_2 == ZERO);
         break;
       default:
-        assert((value.f < 0.0f && range == NEG) ||
-            (value.f > 0.0f && range == POS));
+        assert((value.f < 0.0f && range_1 == NEG) ||
+            (value.f > 0.0f && range_1 == POS));
+        assert((value.f < 0.0f && range_2 == NEG) ||
+            (value.f > 0.0f && range_2 == POS));
         break;
     }
   }
 
-  /*** 3.74 ***/
-  for (unsigned int ii = 0; ii < UINT_MAX; ii++) {
-    float_int_t value = { .u = ii };
-    range_t range = find_range_2(value.f);
-    switch(fpclassify(value.f)) {
-      case FP_NAN:
-        assert(range == OTHER);
-        break;
-      case FP_ZERO:
-        assert(range == ZERO);
-        break;
-      default:
-        assert((value.f < 0.0f && range == NEG) ||
-            (value.f > 0.0f && range == POS));
-        break;
-    }
-  }
   return 0;
 }
