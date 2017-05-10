@@ -158,8 +158,8 @@ def check_for_gadget(asmfunction, offset = 0):
 if __name__ == '__main__':
     asmfunctions = parse_file('ops.txt')
 
-    for index,asmfunction in enumerate(asmfunctions):
-            check_for_gadget(asmfunction)
-            for key, value in asmfunction.gadgets.items():
-                print(format(key, 'x'), " :", value)
+    for asmfunction in asmfunctions:
+        check_for_gadget(asmfunction)
+        for key, value in asmfunction.gadgets.items():
+            print(format(key, 'x'), " :", value)
 
