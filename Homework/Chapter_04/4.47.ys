@@ -1,0 +1,90 @@
+# Execution begins at address 0 
+	.pos 0
+	irmovq stack, %rsp  	# Set up stack pointer
+	call main		# Execute main program
+	halt			# Terminate program 
+
+# Array of 4 elements
+	.align 8
+array:	.quad 0xa000a000a000
+	.quad 0x000d000d000d
+	.quad 0x00c000c000c0
+	.quad 0x0b000b000b00
+	
+
+main:	irmovq array,%rdi
+	irmovq $4,%rsi
+	call bubble_sort	# bubble_sort(array, 4)
+        irmovq $4,%rsi
+        call sort_test		# sort_test(array, 4)
+	ret
+
+# void bubble_sort(long *data, long count)
+# data in %rdi, count in %rsi
+bubble_sort:
+        irmovq  $1, %r11
+        irmovq  $8, %r12
+        subq    %r11, %rsi	# last = count-1
+        jmp     last_test
+loop:
+        rrmovq  %rdi, %r9
+        addq    %r8, %r9
+        mrmovq  (%r9), %rcx
+        rrmovq  %r9, %r10
+        addq    %r12, %r10	# +8
+        mrmovq  (%r10), %rdx
+        rrmovq  %rdx, %r13
+        subq    %rcx, %r13
+        jge     skip
+        rmmovq  %rdx, (%r9)
+        rmmovq  %rcx, (%r10)
+skip:
+        addq    %r11, %rax	# +=1
+        addq    %r12, %r8	# +=8
+        jmp     loop_test
+init_loop:
+        irmovq    $0, %rax	# i
+        irmovq    $0, %r8	# i*8
+loop_test:
+        rrmovq   %rax, %r13
+        subq     %rsi, %r13
+        jl       loop
+        subq     %r11, %rsi
+last_test:
+        andq     %rsi, %rsi
+        jg       init_loop
+        ret
+
+# void sort_test(long *data, long count)
+# data in %rdi, count in %rsi
+sort_test:
+	xorq    %r8, %r8
+        irmovq  $0, %rax
+        irmovq  $1, %r11
+        irmovq  $8, %r12
+        subq    %r11, %rsi
+        jmp     loop2_test
+loop2:
+        rrmovq  %rdi, %rdx
+        addq    %r8, %rdx
+        mrmovq  $0(%rdx), %r9
+        addq    %r12, %rdx
+        mrmovq  $0(%rdx), %r10
+        subq    %r9, %r10
+        jl      bad_order
+        addq    %r11, %rax	# +=1
+        addq    %r12, %r8	# +=8
+loop2_test:
+        rrmovq  %rax, %r9
+        subq    %rsi, %r9
+        jl      loop2
+        irmovq  $0, %rax
+        ret
+bad_order:
+        irmovq  $1, %rax
+        ret
+
+
+# Stack starts here and grows to lower addresses
+	.pos 0x200
+stack:
