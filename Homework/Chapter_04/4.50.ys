@@ -1,0 +1,76 @@
+# Execution begins at address 0 
+	.pos 0
+	irmovq stack, %rsp  	# Set up stack pointer
+	call main		# Execute main program
+	halt			# Terminate program 
+
+# Switch jump table
+	.align 8
+jmptbl: .quad   def
+        .quad   case0
+        .quad   case25
+        .quad   case3
+result: .quad   0x0
+        .quad   0x0
+        .quad   0x0
+        .quad   0x0
+	.quad   0x0
+        .quad   0x0
+        .quad   0x0
+        .quad   0x0
+
+main:	call test
+	ret
+
+# long switchv(long idx)
+# idx in %rdi
+switchv:
+	irmovq	$8, %r11
+	irmovq  $16, %r12
+	irmovq  $24, %r13
+	xorq	%rbx, %rbx
+	rrmovq	%rdi, %rdx # case 0
+	andq	%rdx, %rdx
+        cmove	%r11, %rbx
+	irmovq	$2, %r10   # case 2
+	rrmovq	%rdi, %rdx
+	subq	%r10, %rdx
+        cmove	%r12, %rbx
+	irmovq	$5, %r10   # case 5
+	rrmovq	%rdi, %rdx
+	subq	%r10, %rdx
+        cmove	%r12, %rbx
+	irmovq	$3, %r10   # case 3
+	rrmovq	%rdi, %rdx
+	subq	%r10, %rdx
+        cmove	%r13, %rbx
+	mrmovq	jmptbl(%rbx), %rax
+	pushq	%rax
+	ret
+def:	irmovq	$0xddd, %rax
+	ret
+case0:	irmovq	$0xaaa, %rax
+	ret
+case25:	irmovq	$0xbbb, %rax
+	ret
+case3:	irmovq	$0xccc, %rax
+	ret
+
+# void test()
+test:	irmovq	$8, %r8
+	xorq	%r9, %r9
+	irmovq	$-1, %rdi
+	irmovq	$1, %r14
+	irmovq	$7, %rcx
+loop:	call	switchv
+	rmmovq	%rax, result(%r9)
+	addq	%r8, %r9
+	addq	%r14, %rdi
+	rrmovq  %rdi, %r10
+        subq    %rcx, %r10
+        jl	loop
+	ret
+
+# Stack starts here and grows to lower addresses
+	.pos 0x200
+stack:
