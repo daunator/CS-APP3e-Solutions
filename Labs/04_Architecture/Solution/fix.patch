@@ -1,0 +1,140 @@
+diff -ruN sim_orig/Makefile sim/Makefile
+--- sim_orig/Makefile	2015-04-15 21:02:24.000000000 +0300
++++ sim/Makefile	2017-05-27 19:04:34.607282219 +0300
+@@ -1,19 +1,19 @@
+ # Comment this out if you don't have Tcl/Tk on your system
+ 
+-#GUIMODE=-DHAS_GUI
++GUIMODE=-DHAS_GUI
+ 
+ # Modify the following line so that gcc can find the libtcl.so and
+ # libtk.so libraries on your system. You may need to use the -L option
+ # to tell gcc which directory to look in. Comment this out if you
+ # don't have Tcl/Tk.
+ 
+-TKLIBS=-L/usr/lib -ltk -ltcl
++TKLIBS=-L/usr/lib/x86_64-linux-gnu -ltk -ltcl
+ 
+ # Modify the following line so that gcc can find the tcl.h and tk.h
+ # header files on your system. Comment this out if you don't have
+ # Tcl/Tk.
+ 
+-TKINC=-isystem /usr/include/tcl8.5
++TKINC=-isystem /usr/include/tcl
+ 
+ ##################################################
+ # You shouldn't need to modify anything below here
+diff -ruN sim_orig/pipe/Makefile sim/pipe/Makefile
+--- sim_orig/pipe/Makefile	2015-04-15 21:08:10.000000000 +0300
++++ sim/pipe/Makefile	2017-05-27 19:05:25.695785225 +0300
+@@ -11,13 +11,13 @@
+ # to tell gcc which directory to look in. Comment this out if you
+ # don't have Tcl/Tk.
+ 
+-TKLIBS=-L/usr/lib -ltk -ltcl
++TKLIBS=-L/usr/lib/x86_64-linux-gnu -ltk -ltcl
+ 
+ # Modify the following line so that gcc can find the tcl.h and tk.h
+ # header files on your system. Comment this out if you don't have
+ # Tcl/Tk.
+ 
+-TKINC=-isystem /usr/include/tcl8.5
++TKINC=-isystem /usr/include/tcl
+ 
+ # Modify these two lines to choose your compiler and compile time
+ # flags.
+diff -ruN sim_orig/pipe/pipe.tcl sim/pipe/pipe.tcl
+--- sim_orig/pipe/pipe.tcl	2013-10-29 23:18:20.000000000 +0200
++++ sim/pipe/pipe.tcl	2017-05-27 19:07:26.092966650 +0300
+@@ -24,10 +24,10 @@
+ 
+ 
+ # Font used to display register contents
+-set fontSize [expr 10 * [flagVal "f" 12]]
+-set codeFontSize [expr 10 * [flagVal "c" 10]]
+-set labFontSize [expr 10 * [flagVal "l" 10]]
+-set bigFontSize [expr 10 * [flagVal "b" 16]]
++set fontSize [expr 10 * [flagVal "f" 16]]
++set codeFontSize [expr 10 * [flagVal "c" 14]]
++set labFontSize [expr 10 * [flagVal "l" 14]]
++set bigFontSize [expr 10 * [flagVal "b" 20]]
+ set dpyFont "*-courier-medium-r-normal--*-$fontSize-*-*-*-*-*-*"
+ set labFont "*-helvetica-medium-r-normal--*-$labFontSize-*-*-*-*-*-*"
+ set bigLabFont "*-helvetica-bold-r-normal--*-$bigFontSize-*-*-*-*-*-*"
+diff -ruN sim_orig/pipe/psim.c sim/pipe/psim.c
+--- sim_orig/pipe/psim.c	2016-09-19 14:28:08.000000000 +0300
++++ sim/pipe/psim.c	2017-05-27 19:08:00.329301824 +0300
+@@ -20,6 +20,7 @@
+ #define DEFAULTNAME "Y86-64 Simulator: "
+ 
+ #ifdef HAS_GUI
++#define USE_INTERP_RESULT
+ #include <tk.h>
+ #endif /* HAS_GUI */
+ 
+diff -ruN sim_orig/seq/Makefile sim/seq/Makefile
+--- sim_orig/seq/Makefile	2015-04-07 21:06:59.000000000 +0300
++++ sim/seq/Makefile	2017-05-27 19:06:15.836277833 +0300
+@@ -11,13 +11,13 @@
+ # to tell gcc which directory to look in. Comment this out if you
+ # don't have Tcl/Tk.
+ 
+-TKLIBS=-L/usr/lib -ltk -ltcl
++TKLIBS=-L/usr/lib/x86_64-linux-gnu -ltk -ltcl
+ 
+ # Modify the following line so that gcc can find the tcl.h and tk.h
+ # header files on your system. Comment this out if you don't have
+ # Tcl/Tk.
+ 
+-TKINC=-isystem /usr/include/tcl8.5
++TKINC=-isystem /usr/include/tcl
+ 
+ # Modify these two lines to choose your compiler and compile time
+ # flags.
+diff -ruN sim_orig/seq/seq.tcl sim/seq/seq.tcl
+--- sim_orig/seq/seq.tcl	2015-10-10 05:19:37.000000000 +0300
++++ sim/seq/seq.tcl	2017-05-27 19:09:00.586187036 +0300
+@@ -25,10 +25,10 @@
+ 
+ 
+ # Font used to display register contents
+-set fontSize [expr 10 * [flagVal "f" 12]]
+-set codeFontSize [expr 10 * [flagVal "c" 10]]
+-set labFontSize [expr 10 * [flagVal "l" 10]]
+-set bigFontSize [expr 10 * [flagVal "b" 16]]
++set fontSize [expr 10 * [flagVal "f" 16]]
++set codeFontSize [expr 10 * [flagVal "c" 14]]
++set labFontSize [expr 10 * [flagVal "l" 14]]
++set bigFontSize [expr 10 * [flagVal "b" 20]]
+ set dpyFont "*-courier-medium-r-normal--*-$fontSize-*-*-*-*-*-*"
+ set labFont "*-helvetica-medium-r-normal--*-$labFontSize-*-*-*-*-*-*"
+ set bigLabFont "*-helvetica-bold-r-normal--*-$bigFontSize-*-*-*-*-*-*"
+diff -ruN sim_orig/seq/seq+.tcl sim/seq/seq+.tcl
+--- sim_orig/seq/seq+.tcl	2015-10-10 05:19:47.000000000 +0300
++++ sim/seq/seq+.tcl	2017-05-27 19:09:17.726443640 +0300
+@@ -24,10 +24,10 @@
+ 
+ 
+ # Font used to display register contents
+-set fontSize [expr 10 * [flagVal "f" 12]]
+-set codeFontSize [expr 10 * [flagVal "c" 10]]
+-set labFontSize [expr 10 * [flagVal "l" 10]]
+-set bigFontSize [expr 10 * [flagVal "b" 16]]
++set fontSize [expr 10 * [flagVal "f" 16]]
++set codeFontSize [expr 10 * [flagVal "c" 14]]
++set labFontSize [expr 10 * [flagVal "l" 14]]
++set bigFontSize [expr 10 * [flagVal "b" 20]]
+ set dpyFont "*-courier-medium-r-normal--*-$fontSize-*-*-*-*-*-*"
+ set labFont "*-helvetica-medium-r-normal--*-$labFontSize-*-*-*-*-*-*"
+ set bigLabFont "*-helvetica-bold-r-normal--*-$bigFontSize-*-*-*-*-*-*"
+diff -ruN sim_orig/seq/ssim.c sim/seq/ssim.c
+--- sim_orig/seq/ssim.c	2016-09-19 14:28:23.000000000 +0300
++++ sim/seq/ssim.c	2017-05-27 19:09:53.198966546 +0300
+@@ -17,6 +17,7 @@
+ #define MAXBUF 1024
+ 
+ #ifdef HAS_GUI
++#define USE_INTERP_RESULT
+ #include <tk.h>
+ #endif /* HAS_GUI */
+ 
