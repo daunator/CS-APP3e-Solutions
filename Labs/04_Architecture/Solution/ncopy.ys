@@ -15,18 +15,56 @@ ncopy:
 
 ##################################################################
 # You can modify this portion
-		andq	%rdx, %rdx
-		jne	loop
-		halt
-loop:		mrmovq	$0(%rdi), %rcx
-		iaddq	$8, %rdi
-		rmmovq	%rcx, $0(%rsi)
-		andq	%rcx, %rcx
-		jle	skip
-        	iaddq	$1, %rax
-skip:		iaddq	$8, %rsi
-test:		iaddq	$-1, %rdx
-		jg	loop
+#		xorq	%rax, %rax
+	        iaddq	$-4, %rdx	# len -= 4
+		andq    %rdx, %rdx    
+		jl	remain
+Loop:		mrmovq	(%rdi), %r10   
+		mrmovq	8(%rdi), %r11
+		rmmovq	%r10, (%rsi)
+		andq	%r10, %r10
+		jle	LNpos1
+		iaddq	$1, %rax
+LNpos1:		rmmovq	%r11, $8(%rsi)
+		andq	%r11, %r11
+		jle	LNpos2
+		iaddq	$1, %rax
+LNpos2:		mrmovq	$16(%rdi), %r10
+		mrmovq	$24(%rdi), %r11
+		rmmovq	%r10, $16(%rsi)
+		andq	%r10, %r10
+		jle	LNpos3
+		iaddq	$1, %rax
+LNpos3:		rmmovq	%r11, $24(%rsi)
+		andq	%r11, %r11
+		jle	nextLoop
+		iaddq	$1, %rax
+nextLoop:	iaddq	$32, %rdi
+		iaddq	$32, %rsi
+		iaddq	$-4, %rdx
+		jge	Loop            
+# less than 3 elements remaining
+remain:		iaddq	$3, %rdx	# Restore the true len and subtract -1
+		jl	Done
+		mrmovq	(%rdi), %r10
+		mrmovq	$8(%rdi), %r11
+		rmmovq	%r10, (%rsi)
+		andq	%r10, %r10
+		jle	rNpos
+		iaddq	$1, %rax
+rNpos:		iaddq	$-1, %rdx
+		jl	Done
+		rmmovq	%r11, 8(%rsi)
+		andq	%r11, %r11
+		jle	rNpos1
+		iaddq	$1, %rax
+rNpos1:		iaddq	$-1, %rdx 
+		jl  Done
+		mrmovq	$16(%rdi), %r10
+		rmmovq	%r10, $16(%rsi)
+		andq	%r10, %r10
+		jle	Done
+		iaddq	$1, %rax
 ##################################################################
 # Do not modify the following section of code
 # Function epilogue.
