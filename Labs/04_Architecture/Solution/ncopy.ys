@@ -6,7 +6,8 @@
 # Include your name and ID here.
 #
 # Describe how and why you modified the baseline code.
-#
+# LOOP UNROLLING (this is only described in next chapter)
+# Solution taken from: https://github.com/Ethan-Yan27/CSAPP-Labs
 ##################################################################
 # Do not modify this portion
 # Function prologue.
@@ -16,7 +17,7 @@ ncopy:
 ##################################################################
 # You can modify this portion
 #		xorq	%rax, %rax
-	        iaddq	$-4, %rdx	# len -= 4
+		iaddq	$-4, %rdx	# len -= 4
 		andq    %rdx, %rdx    
 		jl	remain
 Loop:		mrmovq	(%rdi), %r10   
