@@ -3,6 +3,7 @@
 /* function prototypes */
 void inner41(vec_ptr u, vec_ptr v, data_t *dest);
 void inner42(vec_ptr u, vec_ptr v, data_t *dest);
+void inner41a(vec_ptr u, vec_ptr v, data_t *dest);
 
 int main()
 { 
@@ -18,6 +19,7 @@ int main()
   data_t dest;
   inner41(u, v, &dest);
   inner42(u, v, &dest);
+  inner41a(u, v, &dest);
   
   return 0;
 }
